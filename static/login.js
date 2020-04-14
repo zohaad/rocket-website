@@ -1,30 +1,23 @@
 window.addEventListener( "load", function () {
-    function sendData() {
-        const XHR = new XMLHttpRequest();
+    let form = this.document.getElementById( 'loginForm' );
+    
+    async function postLoginForm() {
+        var formData = new FormData( form );
 
-        const FD = new FormData( loginForm );
+        let res = await fetch( '/', {
+            method: 'POST',
+            body: formData,
+            header: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        }).catch(err => console.error(err));
 
-        // ???
-        XHR.addEventListener( "load", function( event ) {
-            // I think I need to put the "response handling logic" here
-        });
-
-        // ???
-        XHR.addEventListener( "error", function( event ) {
-            alert( 'Something went wrong' );
-        });
-
-        XHR.open( "POST", "/" );
-
-        XHR.send( FD )
-
+        if (res.ok) {
+            console.log(await response.json());
+        }
     }
 
-    let loginForm = this.document.getElementById( "loginForm" );
-
-    loginForm.addEventListener( "submit", function( event ) {
+    form.addEventListener( "submit", function( event ) {
         event.preventDefault();
 
-        sendData();
+        postLoginForm();
     });
 });
